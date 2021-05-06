@@ -12,3 +12,9 @@
     font-size: 3.5rem;
   }
 }
+
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}

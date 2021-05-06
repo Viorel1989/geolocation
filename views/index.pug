@@ -1,12 +1,14 @@
 extends layout
-block content
- head 
-    title='Geolocation'
- body
-
-
-    h1.mt-5 Geolocation
-        p.lead Welcome to #{title}
-        p 
-            input(type="text" name="adress" placeholder="Please enter the name of the city")
-            input(type="submit")
+block append body
+   
+   main(
+      role='main'
+      class='flex-shrink-0'
+   )   
+      .container
+         h1.mt-5 Geolocation
+            p.lead Welcome to #{title}
+            p
+               input(type="text" name="adress" placeholder="Please enter the name of the city")
+            p   
+               input(type="submit")
