@@ -1,5 +1,11 @@
 extends layout
 
-block content
- body 
+block append body
+       main(
+            role='main'
+            class='flex-shrink-0'
+        )   
+            .container
+                h1.mt-5 Geolocation
+                    p.lead Welcome to #{title}
  

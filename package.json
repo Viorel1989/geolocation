@@ -12,5 +12,17 @@
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
     "pug": "2.0.0-beta11"
-  }
+  },
+  "description": "[Heroku](https://geolocation-mono.herokuapp.com/)",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Viorel1989/geolocation.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Viorel1989/geolocation/issues"
+  },
+  "homepage": "https://github.com/Viorel1989/geolocation#readme"
 }
