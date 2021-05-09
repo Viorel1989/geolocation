@@ -1,5 +1,13 @@
 extends layout
 
 block page
-  h1(class='mt-5') Express
-  p Welcome to Express.
+    h1(class='mt-5') Geolocation
+    form(method="POST")
+        div(class="form-group")
+            label(for="address") Address
+            input(type="text" class=(!address ? "form-control is-invalid" : "form-control") id="address" name="address" aria-describedby="addressFeedback" value=`${address}`)
+            
+            if !address
+                div(id="addressFeedback" class="invalid-feedback") Please provide an address.
+
+        button(type="submit" class="btn btn-primary") Find
