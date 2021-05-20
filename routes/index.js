@@ -16,7 +16,7 @@ router.post('/', function(req, res, next) {
     console.log("Call Geoapify");
 
     axios.get('https://api.geoapify.com/v1/geocode/search', {
-      params: {
+     node params: {
         text: address,
         apiKey: process.env.GEOAPIFY_API_KEY
       }
@@ -38,5 +38,32 @@ router.post('/', function(req, res, next) {
   }
 });
 
+//create form processing route
+router.post('/formProcess',function(req,res,next){
+  //fetch address from form.js and assign it to a variable
+  let address = req.body.address;
+
+  //keep form validation on server
+  if(address === ""){
+    res.render('index', {address: address} );
+  }
+  else {
+    //send request to geoapify
+    axios.get('https://api.geoapify.com/v1/geocode/search', {
+      node params: {
+         text: address,
+         apiKey: process.env.GEOAPIFY_API_KEY
+       }
+     })
+  
+  .then(function (response){
+    //get JSON response from geoapify and send to form.js
+    let response = [];
+    //parse json received from geoapify
+   
+    });
+  });
+  }
+})
 
 module.exports = router;

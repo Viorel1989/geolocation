@@ -2,7 +2,7 @@ extends layout
 
 block page
     h1(class='mt-5') Geolocation
-    form(method="POST")
+    form(method="POST" id="addressForm")
         div(class="form-group")
             label(for="address") Address
             input(type="text" class=(address !== undefined && address === "" ? "form-control is-invalid" : "form-control") id="address" name="address" aria-describedby="addressFeedback" value=`${address !== undefined ? address : ""}`)
