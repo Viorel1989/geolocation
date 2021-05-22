@@ -1,3 +1,5 @@
+const { response } = require("express");
+
 //Form processing Ajax and jQuery goes here
 $(document).ready(function() {
     //get all of the data from the form using jQuery
@@ -18,7 +20,10 @@ $(document).ready(function() {
             $("#address").addClass("form-control is-invalid");
             $("#address").append('div class="invalid-feedback"' + "Please provide an address");
         } else {
-            //append parsed json from geoapify response using xhr request
+            response.data.features.forEach(feature => {
+                document.createElement("li").textContent=`${feature.properties.address_line1}, ${feature.properties.city}, ${feature.properties.state}, ${feature.properties.country}`;
+            });
+
         }
     });
 

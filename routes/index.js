@@ -16,7 +16,7 @@ router.post('/', function(req, res, next) {
     console.log("Call Geoapify");
 
     axios.get('https://api.geoapify.com/v1/geocode/search', {
-     node params: {
+      params: {
         text: address,
         apiKey: process.env.GEOAPIFY_API_KEY
       }
@@ -48,8 +48,8 @@ router.post('/formProcess',function(req,res,next){
     res.render('index', {address: address} );
   }
   else {
-    //send request to geoapify
-    axios.get('https://api.geoapify.com/v1/geocode/search', {
+    //send request to geoapify and store response to variable
+    let axiosRequest = axios.get('https://api.geoapify.com/v1/geocode/search', {
       node params: {
          text: address,
          apiKey: process.env.GEOAPIFY_API_KEY
@@ -57,13 +57,16 @@ router.post('/formProcess',function(req,res,next){
      })
   
   .then(function (response){
-    //get JSON response from geoapify and send to form.js
-    let response = [];
-    //parse json received from geoapify
-   
-    });
-  });
+  //validate axios request and send server error to browser if no valid respose
+  
+  if(axiosRequest === ""){
+    console.log(`Server Error: ${error.response.data}`);
   }
-})
+  .catch(function (error) {
+    console.error(`Geoapify error: ${error.response.data}`);
+    res.render('index', { address: address} );  
+  })
+}
+});
 
 module.exports = router;
