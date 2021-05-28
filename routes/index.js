@@ -38,5 +38,27 @@ router.post('/', function(req, res, next) {
   }
 });
 
+router('/ajaxForm', function(req,res,next){
+  const address=req.body.address;
+  if(address === ""){
+    res.render('index', { address: address} );
+  } else {
+
+    console.log("Call geoapify");
+ 
+      address = axios.get('https://api.geoapify.com/v1/geocode/search', {
+        params: {
+          text: address,
+          apiKey: process.env.GEOAPIFY_API_KEY
+        }})
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(function (error){
+        console.error(`Geoapify error: ${error.response.data}`);
+        res.render('index', { address: address} );
+      });
+   };
+});
 
 module.exports = router;
