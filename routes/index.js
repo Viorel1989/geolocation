@@ -9,11 +9,12 @@ router.get('/', function(req, res, next) {
 
 router.post('/', function(req, res, next) {
   const address = req.body.address;
+  console.log(address);
   
   if (address === "") {
     res.render('index', { address: address} );
   } else {
-    console.log("Call Geoapify");
+    console.log("Call Geoapify")
 
     axios.get('https://api.geoapify.com/v1/geocode/search', {
       params: {
@@ -22,6 +23,11 @@ router.post('/', function(req, res, next) {
       }
     })
     .then(function (response) {
+      if(req.xhr){
+        console.log('XHR request');
+        let result = response;
+        console.log(result);
+      } else {
       let result = [];
 
       response.data.features.forEach(function(feature) {
@@ -30,35 +36,40 @@ router.post('/', function(req, res, next) {
       });
 
       res.render('index', { address: address, result: result} );
+      }
     })
     .catch(function (error) {
       console.error(`Geoapify error: ${error.response.data}`);
       res.render('index', { address: address} );  
     })
-  }
+  }  
+ 
 });
 
-router('/ajaxForm', function(req,res,next){
-  const address=req.body.address;
-  if(address === ""){
+router.post("/ajaxPost",function(req,res,next){
+  const formAddress = req.body.address;
+  console.log(formAddress);
+
+  if (address === "") {
     res.render('index', { address: address} );
   } else {
+    console.log("Call Geoapify");
 
-    console.log("Call geoapify");
- 
-      address = axios.get('https://api.geoapify.com/v1/geocode/search', {
-        params: {
-          text: address,
-          apiKey: process.env.GEOAPIFY_API_KEY
-        }})
-      .then(response => {
-        console.log(response.data);
-      })
-      .catch(function (error){
-        console.error(`Geoapify error: ${error.response.data}`);
-        res.render('index', { address: address} );
-      });
-   };
+    axios.get('https://api.geoapify.com/v1/geocode/search', {
+      params: {
+        text: formAddress,
+        apiKey: process.env.GEOAPIFY_API_KEY
+      }
+    })
+    .then(function (response) {
+      console.log(response);
+      let result = response;
+
+    })
+    .catch(function (error) {
+      console.error(`Geoapify error: ${error.response.data}`);
+      res.render('index', { address: address} );  
+    })
+  }  
 });
-
 module.exports = router;
