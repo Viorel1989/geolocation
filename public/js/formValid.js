@@ -2,22 +2,29 @@ $(document).ready(function() {
     $("#addressForm").submit(function(event){
         event.preventDefault();
         let address = $("#address").val();
-        console.log(address);
+
 
         if(address === ""){
             $("#address").addClass("form-control is-invalid");
-            $("#address").append('div class="invalid-feedback"' + "Please provide an address");
+            $("#address").append('<div class="invalid-feedback">Please provide an address</div>');
         } else {
 
             $.ajax({
                 type: 'POST',
-                url: '/ajaxPost',
+                url: '/',
                 data: {address},
+                success: function(data){
+                  $("#addressForm").append('<h3 class ="mt-5">Result</h3>');
+                  $("#addressForm").append('<ul class ="list-group list-group-flush" id="resultList"></ul>');
+                  $.each(data.result, function(i, result) {
+                    $("#resultList").append('<li class="list-group-item">'+ result +'</li>')
+                  });
+                }              
               });
             
-            $.post("/ajaxPost",function(response){
-                console.log(response);
-            });
+            // $.post("/",function(data){
+            //     console.log(data);
+            // });
             
         }
     })
