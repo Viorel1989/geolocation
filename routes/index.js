@@ -41,11 +41,7 @@ router.post("/", function (req, res, next) {
       .catch(function (error) {
         console.error(`Geoapify error: ${error.response.data}`);
 
-        if (req.xhr){
-          res.json("index", { address: address });
-        } else {
-          res.render("index", { address: address });
-        }
+
       });
   }
 });

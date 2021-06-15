@@ -7,8 +7,7 @@ block page
             label(for="address") Address
             input(type="text" class=(address !== undefined && address === "" ? "form-control is-invalid" : "form-control") id="address" name="address" aria-describedby="addressFeedback" value=`${address !== undefined ? address : ""}`)
             
-            if address !== undefined && address === ""
-              div(id="addressFeedback" class="invalid-feedback") Please provide an address.
+            div(id="addressFeedback" class="invalid-feedback") Please provide an address.
 
         button(type="submit" class="btn btn-primary") Find
         
