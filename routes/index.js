@@ -39,7 +39,13 @@ router.post("/", function (req, res, next) {
         }
       })
       .catch(function (error) {
-        console.error(`Geoapify error: ${error.response.data}`);
+        console.error(`Geoapify error: ${JSON.stringify(error.response.data)}`);
+
+        if (req.xhr) {
+          res.status(502).json({});
+        } else {
+          res.render("index", { address: address, result: result });
+        }
 
 
       });
