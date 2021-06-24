@@ -11,6 +11,8 @@ $(document).ready(function () {
 
       function drawResult(data) {
 
+        $("#loader").hide();
+
         const dataContainerId = 'addressFormResults';
         const listId = 'addressFormResultsData';
 
@@ -32,6 +34,9 @@ $(document).ready(function () {
         type: 'POST',
         url: '/',
         data: { address },
+        beforeSend: function(){
+          $("#loader").css('display', 'ínline');
+        },
         success: drawResult,
         error: function (jqXHR, textStatus, errorThrown) {
           console.log(jqXHR, textStatus, errorThrown);

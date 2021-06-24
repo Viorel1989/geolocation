@@ -44,7 +44,7 @@ router.post("/", function (req, res, next) {
         if (req.xhr) {
           res.status(502).json({});
         } else {
-          res.render("index", { address: address, result: result });
+          res.render("index", { address: address, err: Error });
         }
 
 
