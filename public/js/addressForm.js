@@ -3,14 +3,12 @@ $(document).ready(function () {
     event.preventDefault();
     let address = $("#address").val();
 
-
     if (address === "") {
       $("#addressFeedback").css('display', 'inline');
     } else {
       $("#addressFeedback").css('display', 'none')
 
       function drawResult(data) {
-
         $("#loader").hide();
 
         const dataContainerId = 'addressFormResults';
@@ -20,7 +18,6 @@ $(document).ready(function () {
           $("#addressForm").append('<div id="' + dataContainerId + '"></div>')
           $("#" + dataContainerId).append('<h3 class="mt-5">Result</h3>');
           $("#" + dataContainerId).append('<ul class="list-group-flush" id="' + listId + '"></ul>');
-
         }
 
         $("#" + listId).empty()
@@ -44,8 +41,5 @@ $(document).ready(function () {
         }
       });
     }
-
-
-
   })
 });

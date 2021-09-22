@@ -47,35 +47,8 @@ router.post("/", function (req, res, next) {
           res.render("index", { address: address, err: Error });
         }
 
-
       });
   }
 });
 
-// router.post("/ajaxPost",function(req,res,next){
-//   const formAddress = req.body.address;
-//   console.log(formAddress);
-
-//   if (address === "") {
-//     res.render('index', { address: address} );
-//   } else {
-//     console.log("Call Geoapify");
-
-//     axios.get('https://api.geoapify.com/v1/geocode/search', {
-//       params: {
-//         text: formAddress,
-//         apiKey: process.env.GEOAPIFY_API_KEY
-//       }
-//     })
-//     .then(function (response) {
-//       console.log(response);
-//       let result = response;
-
-//     })
-//     .catch(function (error) {
-//       console.error(`Geoapify error: ${error.response.data}`);
-//       res.render('index', { address: address} );
-//     })
-//   }
-// });
 module.exports = router;
