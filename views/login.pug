@@ -1,0 +1,9 @@
+extends layout 
+ 
+block page 
+ 
+  .wrapper
+    form.formContent(method='post' action='/login')
+      input#login.fadeIn.second(type='text' name='name' placeholder='login')
+      input#password.fadeIn.third(type='text' name='password' placeholder='password')
+      input.fadeIn.fourth(type='submit' value='Log In')
