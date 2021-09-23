@@ -1,23 +1,30 @@
 extends layout
 
 block page
-    h1(class='mt-5') Geolocation
-    form(method="POST")
-        div(class="form-group")
-            label(for="address") Address
-            input(type="text" class=(address !== undefined && address === "" ? "form-control is-invalid" : "form-control") id="address" name="address" aria-describedby="addressFeedback" value=`${address !== undefined ? address : ""}`)
-            
-            if address !== undefined && address === ""
-              div(id="addressFeedback" class="invalid-feedback") Please provide an address.
+  h1(class='mt-5') Geolocation
+  form(id="addressForm" method="POST")
+    div(class="form-group")
+      label(for="address") Address
+      input(type="text" class=(address !== undefined && address === "" ? "form-control is-invalid" : "form-control") id="address" name="address" aria-describedby="addressFeedback" value=`${address !== undefined ? address : ""}`)
 
-        button(type="submit" class="btn btn-primary") Find
-        
-    if result !== undefined    
-      h3(class='mt-5') Result 
-      ul(class="list-group list-group-flush")
+      if address !== undefined && address === ""
+        div(id="addressFeedback" class="invalid-feedback") Please provide an address.
 
-        if result.length
-          each val in result
-            li(class="list-group-item") #{val}
-        else 
-          li(class="list-group-item") No results
+      if err  
+        div(id="serverFeedback" class="invalid-feedback" style={display: 'inline'}) Please try again later.
+
+      div(id="addressFeedback" class="invalid-feedback") Please provide an address.
+      div(id="serverFeedback" class="invalid-feedback") Please try again later.
+
+    button(type="submit" class="btn btn-primary") Find
+      span(id="loadingSpinner" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" style="display:none")
+      
+  if result !== undefined    
+    h3(class='mt-5') Result 
+    ul(class="list-group list-group-flush")
+
+      if result.length
+        each val in result
+          li(class="list-group-item") #{val}
+      else 
+        li(class="list-group-item") No results
