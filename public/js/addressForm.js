@@ -20,7 +20,7 @@ $(document).ready(function () {
 
         if (!$("#" + listId).length) {
           $(
-            '<ul class="list-group-flush" id="' + listId + '"></ul>'
+            '<ul class="list-group list-group-flush" id="' + listId + '"></ul>'
           ).insertAfter("#" + headerID);
         }
 
