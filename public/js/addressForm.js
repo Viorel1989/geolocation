@@ -1,12 +1,17 @@
 $(document).ready(function () {
   $("#addressForm").submit(function (event) {
     event.preventDefault();
+
     let address = $("#address").val();
 
     if (address === "") {
       $("#addressFeedback").css("display", "inline");
     } else {
       $("#addressFeedback").css("display", "none");
+
+      $(".btn").prop("disabled", true);
+
+      document.getElementById("loadingSpinner").style.visibility = "visible";
 
       function drawResult(data) {
         const headerID = "adressFormResultHeader";
@@ -42,6 +47,9 @@ $(document).ready(function () {
           console.log(jqXHR, textStatus, errorThrown);
           $("#serverFeedback").css("display", "inline");
         },
+      }).done(function () {
+        $(".btn").prop("disabled", false);
+        document.getElementById("loadingSpinner").style.visibility = "hidden";
       });
     }
   });
