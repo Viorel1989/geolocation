@@ -4,42 +4,45 @@ $(document).ready(function () {
     let address = $("#address").val();
 
     if (address === "") {
-      $("#addressFeedback").css('display', 'inline');
+      $("#addressFeedback").css("display", "inline");
     } else {
-      $("#addressFeedback").css('display', 'none')
+      $("#addressFeedback").css("display", "none");
 
       function drawResult(data) {
-        $("#loader").hide();
+        const headerID = "adressFormResultHeader";
+        const listId = "addressFormResults";
 
-        const dataContainerId = 'addressFormResults';
-        const listId = 'addressFormResultsData';
-
-        if (!$("#" + dataContainerId).length) {
-          $("#addressForm").append('<div id="' + dataContainerId + '"></div>')
-          $("#" + dataContainerId).append('<h3 class="mt-5">Result</h3>');
-          $("#" + dataContainerId).append('<ul class="list-group-flush" id="' + listId + '"></ul>');
+        if (!$("#" + headerID).length) {
+          $('<h3 class="mt-5" id="' + headerID + '">Result</h3>').insertAfter(
+            $("#addressForm")
+          );
         }
 
-        $("#" + listId).empty()
+        if (!$("#" + listId).length) {
+          $(
+            '<ul class="list-group-flush" id="' + listId + '"></ul>'
+          ).insertAfter("#" + headerID);
+        }
+
+        $("#" + listId).empty();
 
         $.each(data.result, function (i, result) {
-          $("#" + listId).append('<li class="list-group-item">' + result + "</li>");
+          $("#" + listId).append(
+            '<li class="list-group-item">' + result + "</li>"
+          );
         });
       }
 
       $.ajax({
-        type: 'POST',
-        url: '/',
+        type: "POST",
+        url: "/",
         data: { address },
-        beforeSend: function(){
-          $("#loader").css('display', 'ínline');
-        },
         success: drawResult,
         error: function (jqXHR, textStatus, errorThrown) {
           console.log(jqXHR, textStatus, errorThrown);
-          $("#serverFeedback").css('display', 'inline');
-        }
+          $("#serverFeedback").css("display", "inline");
+        },
       });
     }
-  })
+  });
 });
