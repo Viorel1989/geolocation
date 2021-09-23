@@ -11,7 +11,7 @@ $(document).ready(function () {
 
       $(".btn").prop("disabled", true);
 
-      document.getElementById("loadingSpinner").style.visibility = "visible";
+      $("#loadingSpinner").show();
 
       function drawResult(data) {
         const headerID = "adressFormResultHeader";
@@ -49,7 +49,7 @@ $(document).ready(function () {
         },
       }).done(function () {
         $(".btn").prop("disabled", false);
-        document.getElementById("loadingSpinner").style.visibility = "hidden";
+        $("#loadingSpinner").hide();
       });
     }
   });
