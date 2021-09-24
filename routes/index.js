@@ -13,7 +13,7 @@ const redirectLogin = (req, res, next) => {
 
 /* GET home page. */
 router.get("/", redirectLogin, function (req, res, next) {
-  res.render("index");
+  res.render("index", { name: req.session.userid });
 });
 
 router.post("/", function (req, res, next) {

@@ -1,7 +1,7 @@
 var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
-var session = require("express-session");
+var sessions = require("express-session");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 require("dotenv").config();
@@ -24,7 +24,7 @@ app.use(express.static(path.join(__dirname, "public")));
 const SESS_LIFETIME = 1000 * 60 * 60 * 2;
 
 app.use(
-  session({
+  sessions({
     name: "sid",
     resave: false,
     saveUninitialized: false,
@@ -32,7 +32,6 @@ app.use(
     cookie: {
       maxAge: SESS_LIFETIME,
     },
-    resave: false,
   })
 );
 

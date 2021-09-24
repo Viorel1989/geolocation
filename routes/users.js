@@ -1,21 +1,20 @@
 var express = require("express");
-var session = require("express-session");
 var router = express.Router();
 
 // Set middleware for authenticated user redirect to index
 const redirectHome = (req, res, next) => {
   if (req.session.userid) {
-    res.render("index");
+    res.render("index", { name: req.session.userid });
   } else {
     next();
   }
 };
 
 //Define dummy-data users
-const users = [
-  { id: 1, name: "Viorel", password: "secret" },
-  { id: 2, name: "Viorel2", password: "secret" },
-];
+const name = "Viorel";
+const password = "secret";
+
+let session;
 
 /* GET users listing. */
 router.get("/", function (req, res, next) {
@@ -29,19 +28,13 @@ router.get("/login", redirectHome, function (req, res) {
 
 /* POST login form data */
 router.post("/login", function (req, res) {
-  const { name, password } = req.body;
-
-  if (name && password) {
-    const user = users.find(
-      (user) => user.name === name && user.password === password
-    );
-
-    if (user) {
-      req.session.userid = user.id;
-      return res.render("index", { user: user.name });
-    }
+  if (req.body.name === name && req.body.password === password) {
+    session = req.session;
+    session.userid = req.body.name;
+    res.render("index", { name: session.userid });
+  } else {
+    res.render("login");
   }
-  res.redirect("/");
 });
 
 /* Users logout route  */
