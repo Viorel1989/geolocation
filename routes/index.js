@@ -4,7 +4,7 @@ var router = express.Router();
 
 // Set middleware for unregistered users
 const redirectLogin = (req, res, next) => {
-  if (!req.session.userId) {
+  if (!req.session.userid) {
     res.render("login");
   } else {
     next();
@@ -13,10 +13,6 @@ const redirectLogin = (req, res, next) => {
 
 /* GET home page. */
 router.get("/", redirectLogin, function (req, res, next) {
-  res.render("index");
-});
-/* GET home page. */
-router.get("/", function (req, res, next) {
   res.render("index");
 });
 

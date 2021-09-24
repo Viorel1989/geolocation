@@ -2,7 +2,7 @@ extends layout
  
 block page 
  
-  form.form-signin(method='post' action='/login')
+  form.form-signin(method='post' action='/users/login')
     h1.h3.mb-3.font-weight-normal Please sign in
     label.sr-only(for='name') Your name
     input#inputEmail.form-control(type='text' name='name' placeholder='Your name' required='' autofocus='')
