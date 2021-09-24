@@ -2,8 +2,11 @@ extends layout
  
 block page 
  
-  .wrapper
-    form.formContent(method='post' action='/login')
-      input#login.fadeIn.second(type='text' name='name' placeholder='login')
-      input#password.fadeIn.third(type='text' name='password' placeholder='password')
-      input.fadeIn.fourth(type='submit' value='Log In')
+  form.form-signin(method='post' action='/login')
+    h1.h3.mb-3.font-weight-normal Please sign in
+    label.sr-only(for='name') Your name
+    input#inputEmail.form-control(type='text' name='name' placeholder='Your name' required='' autofocus='')
+    label.sr-only(for='password') Your Password
+    input#inputPassword.form-control(type='text' name='password' placeholder='Password' required='')
+    button.btn.btn-lg.btn-primary.btn-block(type='submit' value='Log In') Sign in
+

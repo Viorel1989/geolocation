@@ -9,7 +9,7 @@ const users = [
 
 // Set middleware for authenticated user redirect to index
 const redirectHome = (req, res, next) => {
-  if (req.session.userId) {
+  if (req.session.id) {
     res.render("/");
   } else {
     next();
@@ -32,7 +32,7 @@ router.post("/", function (req, res) {
 
     if (user) {
       req.session.id = user.id;
-      return res.redirect("/");
+      return res.render("index");
     }
   }
   res.redirect("/");
