@@ -2,17 +2,8 @@ var express = require("express");
 const axios = require("axios").default;
 var router = express.Router();
 
-// Set middleware for unregistered users
-const redirectLogin = (req, res, next) => {
-  if (!req.session.userid) {
-    res.render("login");
-  } else {
-    next();
-  }
-};
-
 /* GET home page. */
-router.get("/", redirectLogin, function (req, res, next) {
+router.get("/", function (req, res, next) {
   res.render("index", { name: req.session.userid });
 });
 

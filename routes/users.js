@@ -1,15 +1,6 @@
 var express = require("express");
 var router = express.Router();
 
-// Set middleware for authenticated user redirect to index
-const redirectHome = (req, res, next) => {
-  if (req.session.userid) {
-    res.render("index", { name: req.session.userid });
-  } else {
-    next();
-  }
-};
-
 //Define dummy-data users
 const name = "Viorel";
 const password = "secret";
@@ -22,7 +13,7 @@ router.get("/", function (req, res, next) {
 });
 
 /* GET login form. */
-router.get("/login", redirectHome, function (req, res) {
+router.get("/login", function (req, res) {
   res.render("login");
 });
 
@@ -31,7 +22,7 @@ router.post("/login", function (req, res) {
   if (req.body.name === name && req.body.password === password) {
     session = req.session;
     session.userid = req.body.name;
-    res.render("index", { name: session.userid });
+    res.redirect("/");
   } else {
     res.render("login");
   }
