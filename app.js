@@ -35,15 +35,13 @@ app.use(
   })
 );
 
-function redirectLogin(req, res, next) {
+app.get("/", function redirectLogin(req, res) {
   if (!req.session.userid) {
-    res.render("login");
+    res.redirect("/users/login");
   } else {
     res.render("index", { name: req.session.userid });
   }
-}
-
-app.get("/", redirectLogin);
+});
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
