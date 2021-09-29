@@ -22,7 +22,7 @@ router.post("/login", function (req, res) {
   if (req.body.name === name && req.body.password === password) {
     session = req.session;
     session.userid = req.body.name;
-    res.redirect("/");
+    return res.redirect("/");
   } else {
     res.render("login");
   }
@@ -31,7 +31,7 @@ router.post("/login", function (req, res) {
 /* Users logout route  */
 router.get("/logout", function (req, res) {
   req.session.destroy();
-  res.redirect("/");
+  return res.redirect("/");
 });
 
 module.exports = router;

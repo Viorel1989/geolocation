@@ -35,11 +35,11 @@ app.use(
   })
 );
 
-app.use("/", function redirectLogin(req, res, next) {
+app.use(function (req, res, next) {
   if (!req.session.userid && req.path !== "/users/login") {
-    res.redirect("/users/login");
+    return res.redirect("/users/login");
   } else if (req.session.userid && req.path === "/users/login") {
-    res.render("index", { user_id: req.session.userid });
+    return res.redirect("/");
   }
   next();
 });
