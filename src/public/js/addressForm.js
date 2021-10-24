@@ -46,6 +46,7 @@ $(document).ready(function () {
         error: function (jqXHR, textStatus, errorThrown) {
           console.log(jqXHR, textStatus, errorThrown);
           $("#serverFeedback").css("display", "inline");
+          $("#loadingSpinner").hide();
         },
       }).done(function () {
         $(".btn").prop("disabled", false);
