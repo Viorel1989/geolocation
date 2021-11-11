@@ -1,18 +1,17 @@
 'use strict';
+const models = require('../models');
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('users', [{
+    return models.User.bulkCreate([{
       firstName: 'John',
       lastName: 'Doe',
-      email: 'example@example.com',
-      password: 'password',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }]);
+      email: 'exampe@example.com',
+      password: 'passd'
+    }], {validate: true});
   },
 
   down: async (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('users', null, {});
+    return queryInterface.bulkDelete('User', null, {});
   }
 };

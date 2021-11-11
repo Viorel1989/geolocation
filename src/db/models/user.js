@@ -1,7 +1,6 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const bcrypt = require('bcrypt');
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -14,13 +13,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   User.init({
-    firstname:{
+    firstName:{
       type: DataTypes.STRING,
       validate: {
         is: /^[a-z0-9\s]+$/i
       }
     },
-    lastname: {
+    lastName: {
       type: DataTypes.STRING,
       validate: {
         is: /^[a-z0-9\s]+$/i
@@ -34,7 +33,21 @@ module.exports = (sequelize, DataTypes) => {
     },
     password: {
       type: DataTypes.STRING,
+      set(value) {
+        this.setDataValue('password', bcrypt.hashSync(value, 10));
+        this.setDataValue('password_raw', value);
       }
+    },
+    password_raw: {
+      type: DataTypes.VIRTUAL,
+      validate: {
+        isLongEnough: function (value) {
+          if (value.length < 8) {
+            throw new Error("Please choose a longer password")
+          }
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'User',
