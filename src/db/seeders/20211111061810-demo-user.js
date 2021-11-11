@@ -7,7 +7,7 @@ module.exports = {
       firstName: 'John',
       lastName: 'Doe',
       email: 'exampe@example.com',
-      password: 'passd'
+      password: 'passsdsddd'
     }], {validate: true});
   },
 
