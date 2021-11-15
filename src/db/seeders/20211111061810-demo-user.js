@@ -6,8 +6,8 @@ module.exports = {
     return models.User.bulkCreate([{
       firstName: 'John',
       lastName: 'Doe',
-      email: 'exampe@example.com',
-      password: 'passsdsddd'
+      email: 'examp@example.com',
+      password: 'passdzzdsd'
     }], {validate: true});
   },
 
