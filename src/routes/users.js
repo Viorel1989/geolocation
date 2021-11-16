@@ -28,6 +28,11 @@ router.post("/login", function (req, res) {
   }
 });
 
+/* GET registration form. */
+router.get("/register", function (req, res) {
+  res.render("register");
+});
+
 /* Users logout route  */
 router.get("/logout", function (req, res) {
   req.session.destroy();
