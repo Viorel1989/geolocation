@@ -21,6 +21,23 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+//initiate db connection with sequelize
+const Sequelize = require('sequelize');
+const sequelize = new Sequelize({
+  database: process.env.POSTGRES_DB,
+  username: process.env.POSTGRES_USER,
+  password: process.env.POSTGRES_PASSWORD,
+  host: "host.docker.internal",
+  dialect: "postgres"
+})
+
+//test connection
+sequelize.authenticate().then(() => {
+  console.log("Connecation established succesfully.");
+}).catch(err => {
+  console.error("Unable to connect to database:", err)
+});
+
 const SESS_LIFETIME = 1000 * 60 * 60 * 2;
 
 app.use(
