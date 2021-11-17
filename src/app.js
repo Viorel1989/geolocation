@@ -22,17 +22,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 //initiate db connection with sequelize
-const Sequelize = require('sequelize');
-const sequelize = new Sequelize({
-  database: process.env.POSTGRES_DB,
-  username: process.env.POSTGRES_USER,
-  password: process.env.POSTGRES_PASSWORD,
-  host: "host.docker.internal",
-  dialect: "postgres"
-})
+app.locals.db = require('./db/models');
 
 //test connection
-sequelize.authenticate().then(() => {
+app.locals.db.sequelize.authenticate().then(() => {
   console.log("Connecation established succesfully.");
 }).catch(err => {
   console.error("Unable to connect to database:", err)
