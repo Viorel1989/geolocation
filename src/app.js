@@ -26,7 +26,7 @@ app.locals.db = require('./db/models');
 
 //test connection
 app.locals.db.sequelize.authenticate().then(() => {
-  console.log("Connecation established succesfully.");
+  console.log("Connection established succesfully.");
 }).catch(err => {
   console.error("Unable to connect to database:", err)
 });
@@ -45,14 +45,14 @@ app.use(
   })
 );
 
-// app.use(function (req, res, next) {
-//   if (!req.session.userid && req.path !== "/users/login" && req.path !== "/users/register") {
-//     return res.redirect("/users/login");
-//   } else if (req.session.userid && req.path === "/users/login") {
-//     return res.redirect("/");
-//   }
-//   next();
-// });
+app.use(function (req, res, next) {
+  if (!req.session.userid && req.path !== "/users/login" && req.path !== "/users/register") {
+    return res.redirect("/users/login");
+  } else if (req.session.userid && req.path === "/users/login") {
+    return res.redirect("/");
+  }
+  next();
+});
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);

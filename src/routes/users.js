@@ -3,10 +3,6 @@ const user = require("../db/models/user");
 var router = express.Router();
 const bcrypt = require("bcrypt");
 
-//Define dummy-data users
-const name = "Viorel";
-const password = "secret";
-
 let session;
 
 /* GET users listing. */
@@ -31,7 +27,10 @@ router.post("/login", function (req, res) {
     }
   })
   .then(user => {
+    console.log(req.body.password);
     if (bcrypt.compareSync(req.body.password,user.password)) {
+      session = req.session;
+      session.userid = req.body.email;
       return res.redirect("/"); 
     } else {
       res.render("login");
@@ -43,14 +42,6 @@ router.post("/login", function (req, res) {
     res.render("login");
   })
 
-  //initialize session
-//   if (req.body.name === name && req.body.password === password) {
-//     session = req.session;
-//     session.userid = req.body.name;
-//     return res.redirect("/");
-//   } else {
-//     res.render("login");
-//   }
  });
 
 /* GET registration form. */
