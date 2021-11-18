@@ -45,14 +45,14 @@ app.use(
   })
 );
 
-app.use(function (req, res, next) {
-  if (!req.session.userid && req.path !== "/users/login" && req.path !== "/users/register") {
-    return res.redirect("/users/login");
-  } else if (req.session.userid && req.path === "/users/login") {
-    return res.redirect("/");
-  }
-  next();
-});
+// app.use(function (req, res, next) {
+//   if (!req.session.userid && req.path !== "/users/login" && req.path !== "/users/register") {
+//     return res.redirect("/users/login");
+//   } else if (req.session.userid && req.path === "/users/login") {
+//     return res.redirect("/");
+//   }
+//   next();
+// });
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);

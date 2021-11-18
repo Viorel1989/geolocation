@@ -1,6 +1,7 @@
 var express = require("express");
 const user = require("../db/models/user");
 var router = express.Router();
+const bcrypt = require("bcrypt");
 
 //Define dummy-data users
 const name = "Viorel";
@@ -30,10 +31,10 @@ router.post("/login", function (req, res) {
     }
   })
   .then(user => {
-    if (user.password === req.body.password) {
-      res.send("It's alive"); 
+    if (bcrypt.compareSync(req.body.password,user.password)) {
+      return res.redirect("/"); 
     } else {
-      res.send("Sorry bro...");
+      res.render("login");
     }
   })
 
