@@ -21,16 +21,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-//initiate db connection with sequelize
-app.locals.db = require('./db/models');
-
-//test connection
-app.locals.db.sequelize.authenticate().then(() => {
-  console.log("Connection established succesfully.");
-}).catch(err => {
-  console.error("Unable to connect to database:", err)
-});
-
 const SESS_LIFETIME = 1000 * 60 * 60 * 2;
 
 app.use(
