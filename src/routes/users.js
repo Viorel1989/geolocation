@@ -17,31 +17,26 @@ router.get("/login", function (req, res) {
 
 /* POST login form data */
 router.post("/login", function (req, res) {
-
-  // handle user login using sequelize
   const db = req.app.locals.db;
 
+  // handle user login using sequelize
   db.User.findOne({
     where: {
       email: req.body.email
     }
   })
   .then(user => {
-    console.log(req.body.password);
-    if (bcrypt.compareSync(req.body.password,user.password)) {
-      session = req.session;
-      session.userid = req.body.email;
+    if (user !== null && user.validPassword(req.body.password) === true) {
+      req.session.userid = user.id;
       return res.redirect("/"); 
     } else {
-      res.render("login");
+      return res.redirect("users/login");
     }
   })
-
   .catch((err) => {
     console.log(err);
-    res.render("login");
-  })
-
+    next(error);
+  });
  });
 
 /* GET registration form. */

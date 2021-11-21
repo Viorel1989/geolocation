@@ -11,9 +11,13 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
+    // add method for password validation
+    validPassword(password) {
+      return bcrypt.compareSync(password, this.password);
+    }
   };
   User.init({
-    firstName:{
+    firstName: {
       type: DataTypes.STRING,
       validate: {
         is: /^[a-z0-9\s]+$/i
