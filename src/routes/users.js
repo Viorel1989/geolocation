@@ -27,7 +27,7 @@ router.post("/login", function (req, res) {
   })
   .then(user => {
     if (user !== null && user.validPassword(req.body.password) === true) {
-      req.session.userid = user.id;
+      req.session.userId = user.id;
       return res.redirect("/"); 
     } else {
       return res.redirect("users/login");
