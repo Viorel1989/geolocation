@@ -12,7 +12,7 @@ router.get("/", function (req, res, next) {
 
 /* GET login form. */
 router.get("/login", function (req, res) {
-  res.render("login");
+  res.render("login", { loginError: req.flash("error").length > 0 ? true : false });
 });
 
 /* POST login form data */
@@ -30,6 +30,7 @@ router.post("/login", function (req, res) {
       req.session.userId = user.id;
       return res.redirect("/"); 
     } else {
+      req.flash('error', 'loginError');
       return res.redirect("users/login");
     }
   })

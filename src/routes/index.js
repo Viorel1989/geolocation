@@ -4,7 +4,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
-  res.render("index", { user_id: req.session.userId });
+  res.render("index", { userId: req.session.userId });
 });
 
 router.post("/", function (req, res, next) {

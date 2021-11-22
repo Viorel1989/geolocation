@@ -9,4 +9,7 @@ block page
     label.sr-only(for='password') Your Password
     input#inputPassword.form-control(type='password' name='password' placeholder='Password' required='')
     button.btn.btn-lg.btn-primary.btn-block(type='submit' value='Log In') Sign in
+    
+    if loginError   
+      div.alert.alert-danger.mt-2(role='alert') Invalid email or password
     p If you don't have an accout you can register a new one #[a(href="/users/register") here]

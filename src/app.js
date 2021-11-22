@@ -2,6 +2,7 @@ var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
 var sessions = require("express-session");
+var flash = require("express-flash");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 require("dotenv").config();
@@ -34,6 +35,8 @@ app.use(
     },
   })
 );
+
+app.use(flash());
 
 app.use(function (req, res, next) {
   if (!req.session.userId && req.path !== "/users/login" && req.path !== "/users/register") {
