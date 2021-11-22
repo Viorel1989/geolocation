@@ -11,7 +11,7 @@ router.get("/", function (req, res, next) {
 });
 
 /* GET login form. */
-router.get("/login", function (req, res) {
+router.get("/login", function (req, res, next) {
   res.render("login", { loginError: req.flash("error").length > 0 ? true : false });
 });
 
@@ -31,7 +31,7 @@ router.post("/login", function (req, res) {
       return res.redirect("/"); 
     } else {
       req.flash('error', 'loginError');
-      return res.redirect("users/login");
+      return res.redirect("/users/login");
     }
   })
   .catch((err) => {
@@ -42,7 +42,43 @@ router.post("/login", function (req, res) {
 
 /* GET registration form. */
 router.get("/register", function (req, res) {
-  res.render("register");
+  res.render("register", { registerError: req.flash("error").length > 0 ? true : false });
+});
+
+router.post("/register", function (req,res, next) {
+  const db = req.app.locals.db;
+
+  db.User.findOne({
+    where: {
+      email: req.body.email
+    }
+  })
+  .then(user => {
+    if (!user) {
+      db.User.bulkCreate([{
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        password: req.body.password
+      }], {validate: true})
+      .then(user => {
+        //after validating register show a firendly message on browser
+        return res.redirect("/users/login");
+      })
+      .catch((err) => {
+        console.log(err);
+        req.flash('error', 'registerError');
+        return res.redirect("/users/register");
+      })
+   } else {
+      req.flash('error', 'registerError');
+      return res.redirect("/users/register");
+    }
+  })
+  .catch((err) => {
+    console.log(err);
+    next(error);
+  });
 });
 
 /* Users logout route  */
