@@ -43,7 +43,6 @@ Run database migrations/seeding
 
 ```bash
   docker-compose exec app npx sequelize-cli db:migrate
-  docker-compose exec app npx sequelize-cli db:seed:all
 ```
 
 Start all Docker containers

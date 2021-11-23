@@ -55,12 +55,12 @@ router.post("/register", function (req,res, next) {
   })
   .then(user => {
     if (!user) {
-      db.User.bulkCreate([{
+      db.User.create({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
         password: req.body.password
-      }], {validate: true})
+      })
       .then(user => {
         //after validating register show a firendly message on browser
         return res.redirect("/users/login");
