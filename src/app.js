@@ -2,6 +2,8 @@ var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
 var sessions = require("express-session");
+const redis = require("redis");
+const connectRedis = require("connect-redis");
 var flash = require("express-flash");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
@@ -22,15 +24,33 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+// redis session store setup
+
+const RedisStore = connectRedis(sessions);
+
+const redisClient = redis.createClient({
+  host: 'host.docker.internal',
+  port: 6379
+})
+
+redisClient.on('error', function (err) {
+  console.log('Could not establish a connection with redis ' + err);
+});
+redisClient.on('connect', function (err) {
+  console.log('Connected to redis successfully');
+})
+
 const SESS_LIFETIME = 1000 * 60 * 60 * 2;
 
 app.use(
   sessions({
-    name: "sid",
+    store: new RedisStore ({ client: redisClient }),
     resave: false,
     saveUninitialized: false,
     secret: "secret",
     cookie: {
+      secure: false,
+      httpOnly: false,
       maxAge: SESS_LIFETIME,
     },
   })
