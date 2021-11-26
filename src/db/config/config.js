@@ -2,14 +2,15 @@ require("dotenv").config();
 
 module.exports = {
   development: {
-    username: process.env.POSTGRES_USER,
-    password: process.env.POSTGRES_PASSWORD,
-    database: process.env.POSTGRES_DB,
-    host: "host.docker.internal",
+    // username: process.env.POSTGRES_USER,
+    // password: process.env.POSTGRES_PASSWORD,
+    // database: process.env.POSTGRES_DB,
+    // host: "host.docker.internal",
     dialect: "postgres",
+    use_env_variable: "DATABASE_URL",
   },
   production: {
-    url: process.env.DATABASE_URL,
+    use_env_variable: "DATABASE_URL",
     dialect: "postgres",
   },
 };
