@@ -4,6 +4,7 @@ RUN apt-get update && apt-get install -y dumb-init
 WORKDIR /usr/geolocation
 
 COPY --chown=node:node ./src ./src
+COPY --chown=node:node ./.sequelizerc ./.sequelizerc
 COPY --chown=node:node package*.json ./
 
 RUN npm install -g nodemon
