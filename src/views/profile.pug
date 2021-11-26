@@ -1,0 +1,20 @@
+extends layout 
+
+block page 
+
+  form.form-signin(method='post' action='/users/profile')
+    h1.h3.mb-3.font-weight-normal Update your profile
+    label.sr-only(for='firstName') Your first name
+    input#inputFirstName.form-control(type='text' name='firstName' placeholder="Your first name" value=firstName autofocus='')
+    label.sr-only(for='lastName') Your last name
+    input#inputLastName.form-control(type='text' name='lastName' placeholder="Your last name" value=lastName autofocus='')
+    label.sr-only(for='oldPassword') Old password
+    input#inputPassword.form-control(type='password' name='oldPassword' placeholder='Old Password' required='')
+    label.sr-only(for='newPassword') New Password
+    input#inputPassword.form-control(type='password' name='newPassword' placeholder='New Password' required='')
+    button.btn.btn-lg.btn-primary.btn-block(type='submit' value='profile') Save
+
+    if profileSuccess   
+      div.alert.alert-success.mt-2(role='alert') Done
+    if profileError   
+      div.alert.alert-danger.mt-2(role='alert') Invalid data

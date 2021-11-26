@@ -44,7 +44,7 @@ app.use(
     saveUninitialized: false,
     secret: process.env.SESSION_SECRET,
     cookie: {
-      secure: false
+      secure: false,
     },
   })
 );
@@ -61,6 +61,7 @@ app.use(function (req, res, next) {
   } else if (req.session.userId && req.path === "/users/login") {
     return res.redirect("/");
   }
+  app.locals.userId = req.session.userId;
   next();
 });
 

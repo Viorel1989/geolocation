@@ -80,4 +80,74 @@ router.get("/logout", function (req, res) {
   return res.redirect("/");
 });
 
+/* GET profile form. */
+router.get("/profile", function (req, res, next) {
+  const db = req.app.locals.db;
+
+  // handle user login using sequelize
+  db.User.findOne({
+    where: {
+      id: req.session.userId,
+    },
+  })
+    .then((user) => {
+      res.render("profile", {
+        profileSuccess: req.flash("success").length > 0 ? true : false,
+        profileError: req.flash("error").length > 0 ? true : false,
+        firstName: user.firstName,
+        lastName: user.lastName,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      next(err);
+    });
+});
+
+router.post("/profile", function (req, res, next) {
+  const db = req.app.locals.db;
+
+  db.User.findOne({
+    where: {
+      id: req.session.userId,
+    },
+  })
+    .then((user) => {
+      const data = {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+      };
+
+      if (req.body.newPassword) {
+        if (user.validPassword(req.body.oldPassword) === true) {
+          data["password"] = req.body.newPassword;
+        } else {
+          req.flash("error", "profileError");
+          return res.redirect("/users/profile");
+        }
+      }
+
+      user
+        .update(data)
+        .then(() => {
+          req.flash("success", "profileSuccess");
+          return res.redirect("/users/profile");
+        })
+        .catch((err) => {
+          if (err instanceof db.Sequelize.DatabaseError) {
+            console.log(err);
+            next(err);
+          } else {
+            console.log(err);
+            req.flash("error", "profileError");
+            return res.redirect("/users/profile");
+          }
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+      next(err);
+    });
+});
+
 module.exports = router;
