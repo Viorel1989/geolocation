@@ -26,32 +26,25 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // redis session store setup
 
-const RedisStore = connectRedis(sessions);
-
-const redisClient = redis.createClient({
-  host: 'host.docker.internal',
-  port: 6379
-})
-
-redisClient.on('error', function (err) {
-  console.log('Could not establish a connection with redis ' + err);
+app.locals.redis = redis.createClient({
+  url: process.env.REDIS_URL,
+  legacyMode: true,
 });
-redisClient.on('connect', function (err) {
-  console.log('Connected to redis successfully');
-})
 
-const SESS_LIFETIME = 1000 * 60 * 60 * 2;
+app.locals.redis.on("error", function (err) {
+  throw err;
+});
+
+let RedisStore = connectRedis(sessions);
 
 app.use(
   sessions({
-    store: new RedisStore ({ client: redisClient }),
+    store: new RedisStore({ client: app.locals.redis }),
     resave: false,
     saveUninitialized: false,
-    secret: "secret",
+    secret: process.env.SESSION_SECRET,
     cookie: {
-      secure: false,
-      httpOnly: false,
-      maxAge: SESS_LIFETIME,
+      secure: false
     },
   })
 );
@@ -59,7 +52,11 @@ app.use(
 app.use(flash());
 
 app.use(function (req, res, next) {
-  if (!req.session.userId && req.path !== "/users/login" && req.path !== "/users/register") {
+  if (
+    !req.session.userId &&
+    req.path !== "/users/login" &&
+    req.path !== "/users/register"
+  ) {
     return res.redirect("/users/login");
   } else if (req.session.userId && req.path === "/users/login") {
     return res.redirect("/");
@@ -78,7 +75,10 @@ app.use(function (req, res, next) {
 // error handler
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development
-  res.locals.message = req.app.get("env") === "development" ? err.message: "Internal Server Error";
+  res.locals.message =
+    req.app.get("env") === "development"
+      ? err.message
+      : "Internal Server Error";
   res.locals.error = req.app.get("env") === "development" ? err : {};
 
   // render the error page

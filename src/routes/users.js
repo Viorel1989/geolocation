@@ -12,73 +12,66 @@ router.get("/", function (req, res, next) {
 
 /* GET login form. */
 router.get("/login", function (req, res, next) {
-  res.render("login", { loginError: req.flash("error").length > 0 ? true : false });
+  res.render("login", {
+    loginError: req.flash("error").length > 0 ? true : false,
+  });
 });
 
 /* POST login form data */
-router.post("/login", function (req, res) {
+router.post("/login", function (req, res, next) {
   const db = req.app.locals.db;
 
   // handle user login using sequelize
   db.User.findOne({
     where: {
-      email: req.body.email
-    }
+      email: req.body.email,
+    },
   })
-  .then(user => {
-    if (user !== null && user.validPassword(req.body.password) === true) {
-      req.session.userId = user.id;
-      return res.redirect("/"); 
-    } else {
-      req.flash('error', 'loginError');
-      return res.redirect("/users/login");
-    }
-  })
-  .catch((err) => {
-    console.log(err);
-    next(error);
-  });
- });
+    .then((user) => {
+      if (user !== null && user.validPassword(req.body.password) === true) {
+        req.session.userId = user.id;
+        return res.redirect("/");
+      } else {
+        req.flash("error", "loginError");
+        return res.redirect("/users/login");
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      next(err);
+    });
+});
 
 /* GET registration form. */
 router.get("/register", function (req, res) {
-  res.render("register", { registerError: req.flash("error").length > 0 ? true : false });
+  res.render("register", {
+    registerError: req.flash("error").length > 0 ? true : false,
+  });
 });
 
-router.post("/register", function (req,res, next) {
+router.post("/register", function (req, res, next) {
   const db = req.app.locals.db;
 
-  db.User.findOne({
-    where: {
-      email: req.body.email
-    }
+  db.User.create({
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    password: req.body.password,
   })
-  .then(user => {
-    if (!user) {
-      db.User.create({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        password: req.body.password
-      })
-      .then(user => {
-        //after validating register show a firendly message on browser
-        return res.redirect("/users/login");
-      })
-      .catch((err) => {
+    .then((user) => {
+      //after validating register show a firendly message on browser
+      return res.redirect("/users/login");
+    })
+    .catch((err) => {
+      if (err instanceof db.Sequelize.DatabaseError) {
         console.log(err);
-        req.flash('error', 'registerError');
+        next(err);
+      } else {
+        console.log(err, typeof err);
+        req.flash("error", "registerError");
         return res.redirect("/users/register");
-      })
-   } else {
-      req.flash('error', 'registerError');
-      return res.redirect("/users/register");
-    }
-  })
-  .catch((err) => {
-    console.log(err);
-    next(error);
-  });
+      }
+    });
 });
 
 /* Users logout route  */
