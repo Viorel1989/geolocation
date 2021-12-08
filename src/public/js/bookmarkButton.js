@@ -1,5 +1,6 @@
 let input = document.getElementById("address");
-let button = document.querySelector("#bookmarkBtn");
+let button = document.getElementById("bookmarkBtn");
+var data = input.value;
 
 button.disabled = true;
 
