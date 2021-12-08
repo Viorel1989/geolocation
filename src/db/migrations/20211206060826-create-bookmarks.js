@@ -10,7 +10,6 @@ module.exports = {
       },
       userId: {
         type: Sequelize.INTEGER.UNSIGNED,
-        autoIncrement: true,
         allowNull: false,
       },
       name: {
