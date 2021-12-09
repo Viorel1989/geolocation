@@ -158,25 +158,28 @@ router.post("/bookmarks", function (req, res, next) {
 
   const db = req.app.locals.db;
 
-  // handle user login using sequelize
+  // handle bookmarks using sequelize
   db.bookmarks
-    .create({
-      userId: req.session.userId,
-      name: req.session.name,
-      address: address,
+    .findOrCreate({
+      where: {
+        address: address,
+      },
+      defaults: {
+        userId: req.session.userId,
+        name: req.session.name,
+      },
     })
-    .then((bookmarks) => {
-      res.json({ address: address });
+    .then((result) => {
+      console.log(result);
+      if (result) {
+        return res.json({ message: "Already bookmarked this address" });
+      } else {
+        return res.json({ message: "Succesfully added to bookmarks!" });
+      }
     })
     .catch((err) => {
-      if (err instanceof db.Sequelize.DatabaseError) {
-        console.log(err);
-        next(err);
-      } else {
-        console.log(err, typeof err);
-        req.flash("error", "registerError");
-        return res.redirect("/users/register");
-      }
+      console.log(err);
+      next(err);
     });
 });
 

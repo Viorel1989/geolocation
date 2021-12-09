@@ -23,11 +23,14 @@ $("#bookmarkBtn").click(function () {
     dataType: "json",
     data: JSON.stringify({ address: address }),
     contentType: "application/json",
-    success: console.log("success"),
+    success: function (data) {
+      $("#modalMessage").text(data.message);
+    },
     error: function (jqXHR, textStatus, errorThrown) {
       console.log(jqXHR, textStatus, errorThrown);
     },
   }).done(function () {
     console.log("done");
+    //$("#bookmarkBtn").prop("disabled", true);
   });
 });
