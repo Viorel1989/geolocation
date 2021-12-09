@@ -15,12 +15,14 @@ function statehandle() {
 
 $("#bookmarkBtn").click(function () {
   let address = $("#address").val();
+  console.log(JSON.stringify(address));
 
   $.ajax({
     type: "POST",
     url: "/users/bookmarks",
     dataType: "json",
-    data: { address },
+    data: JSON.stringify({ address: address }),
+    contentType: "application/json",
     success: console.log("success"),
     error: function (jqXHR, textStatus, errorThrown) {
       console.log(jqXHR, textStatus, errorThrown);
