@@ -30,6 +30,7 @@ router.post("/login", function (req, res, next) {
     .then((user) => {
       if (user !== null && user.validPassword(req.body.password) === true) {
         req.session.userId = user.id;
+        req.session.name = user.name;
         return res.redirect("/");
       } else {
         req.flash("error", "loginError");
@@ -152,10 +153,31 @@ router.post("/profile", function (req, res, next) {
 
 /* POST bookmark form data */
 router.post("/bookmarks", function (req, res, next) {
-  console.log(req.body);
-  res.send(req.body);
+  let address = req.body.address;
+  console.log(address);
 
   const db = req.app.locals.db;
+
+  // handle user login using sequelize
+  db.bookmarks
+    .create({
+      userId: req.session.userId,
+      name: req.session.name,
+      address: address,
+    })
+    .then((bookmarks) => {
+      res.json({ address: address });
+    })
+    .catch((err) => {
+      if (err instanceof db.Sequelize.DatabaseError) {
+        console.log(err);
+        next(err);
+      } else {
+        console.log(err, typeof err);
+        req.flash("error", "registerError");
+        return res.redirect("/users/register");
+      }
+    });
 });
 
 module.exports = router;

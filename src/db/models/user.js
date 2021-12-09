@@ -1,6 +1,7 @@
 "use strict";
 const bcrypt = require("bcrypt");
 const { Model } = require("sequelize");
+const bookmarks = require("./bookmarks");
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -8,7 +9,12 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate() {}
+    static associate(models) {
+      this.hasMany(models.bookmarks, {
+        foreignKey: "userId",
+        onDelete: "cascade",
+      });
+    }
     // add method for password validation
     validPassword(password) {
       return bcrypt.compareSync(password, this.password);
