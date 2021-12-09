@@ -13,3 +13,20 @@ function statehandle() {
     button.disabled = false;
   }
 }
+
+$("#bookmarkBtn").click(function () {
+  let address = $("#address").val();
+
+  $.ajax({
+    type: "POST",
+    url: "/users/bookmarks",
+    dataType: "json",
+    data: { address },
+    success: console.log("success"),
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log(jqXHR, textStatus, errorThrown);
+    },
+  }).done(function () {
+    console.log("done");
+  });
+});

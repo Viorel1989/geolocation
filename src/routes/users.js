@@ -150,4 +150,12 @@ router.post("/profile", function (req, res, next) {
     });
 });
 
+/* POST bookmark form data */
+router.post("/bookmarks", function (req, res, next) {
+  console.log(req.body);
+  res.send(req.body);
+
+  const db = req.app.locals.db;
+});
+
 module.exports = router;

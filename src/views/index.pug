@@ -18,8 +18,19 @@ block page
 
     button(type="submit" class="btn btn-primary") Find
       span(id="loadingSpinner" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" style="display:none")
-    button(type="button" id="bookmarkBtn" class="btn btn-primary ml-1") Bookmark
+    button(type="button" id="bookmarkBtn" class="btn btn-primary ml-1" data-toggle="modal" data-target="#bookmarkModal") Bookmark
 
+  #bookmarkModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='bookmarkModalLabel' aria-hidden='true')
+    .modal-dialog(role='document')
+      .modal-content
+        .modal-header
+          h5#bookmarkModalLabel.modal-title Bookmark
+          button.close(type='button' data-dismiss='modal' aria-label='Close')
+            span(aria-hidden='true') &times;
+        .modal-body
+          p Your bookmark was added succesfully or have encountered an error
+        .modal-footer
+          button.btn.btn-secondary(type='button' data-dismiss='modal') Close
 
   if result !== undefined    
     h3(class='mt-5') Result 
