@@ -9,9 +9,9 @@ block page
     label.sr-only(for='lastName') Your last name
     input#inputLastName.form-control(type='text' name='lastName' placeholder="Your last name" value=lastName autofocus='')
     label.sr-only(for='oldPassword') Old password
-    input#inputPassword.form-control(type='password' name='oldPassword' placeholder='Old Password' required='')
+    input#inputPassword.form-control(type='password' name='oldPassword' placeholder='Old Password')
     label.sr-only(for='newPassword') New Password
-    input#inputPassword.form-control(type='password' name='newPassword' placeholder='New Password' required='')
+    input#inputPassword.form-control(type='password' name='newPassword' placeholder='New Password')
     button.btn.btn-lg.btn-primary.btn-block(type='submit' value='profile') Save
 
     if profileSuccess   
