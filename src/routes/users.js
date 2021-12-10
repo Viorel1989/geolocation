@@ -2,6 +2,7 @@ var express = require("express");
 const user = require("../db/models/user");
 var router = express.Router();
 const bcrypt = require("bcrypt");
+const bookmarks = require("../db/models/bookmarks");
 
 let session;
 
@@ -169,12 +170,12 @@ router.post("/bookmarks", function (req, res, next) {
         name: req.session.name,
       },
     })
-    .then((result) => {
-      console.log(result);
-      if (result) {
-        return res.json({ message: "Already bookmarked this address" });
-      } else {
+    .then(([bookmarks, created]) => {
+      console.log(created);
+      if (created) {
         return res.json({ message: "Succesfully added to bookmarks!" });
+      } else {
+        return res.json({ message: "Already bookmarked this address" });
       }
     })
     .catch((err) => {
