@@ -1,7 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class bookmarks extends Model {
+  class Bookmark extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate() {}
   }
-  bookmarks.init(
+  Bookmark.init(
     {
       userId: {
         type: DataTypes.INTEGER.UNSIGNED,
@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       name: {
         type: DataTypes.STRING,
         validate: {
-          is: /^[a-z0-9\s]+$/i,
+          not: ["^~!@#$%^&*()_|=?;:'\".<>{}", "gi"],
         },
       },
       address: {
@@ -32,8 +32,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "bookmarks",
+      modelName: "Bookmark",
+      tableName: "bookmarks",
     }
   );
-  return bookmarks;
+  return Bookmark;
 };

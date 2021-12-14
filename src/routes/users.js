@@ -1,10 +1,5 @@
 var express = require("express");
-const user = require("../db/models/user");
 var router = express.Router();
-const bcrypt = require("bcrypt");
-const bookmarks = require("../db/models/bookmarks");
-
-let session;
 
 /* GET users listing. */
 router.get("/", function (req, res, next) {
@@ -31,7 +26,6 @@ router.post("/login", function (req, res, next) {
     .then((user) => {
       if (user !== null && user.validPassword(req.body.password) === true) {
         req.session.userId = user.id;
-        req.session.name = user.name;
         return res.redirect("/");
       } else {
         req.flash("error", "loginError");
@@ -154,33 +148,24 @@ router.post("/profile", function (req, res, next) {
 
 /* POST bookmark form data */
 router.post("/bookmarks", function (req, res, next) {
-  let address = req.body.address;
-  console.log(address);
-
+  // handle bookmarks using sequelize
   const db = req.app.locals.db;
 
-  // handle bookmarks using sequelize
-  db.bookmarks
-    .findOrCreate({
-      where: {
-        address: address,
-      },
-      defaults: {
-        userId: req.session.userId,
-        name: req.session.name,
-      },
-    })
-    .then(([bookmarks, created]) => {
-      console.log(created);
-      if (created) {
-        return res.json({ message: "Succesfully added to bookmarks!" });
-      } else {
-        return res.json({ message: "Already bookmarked this address" });
-      }
+  db.Bookmark.create({
+    userId: req.session.userId,
+    name: req.body.bookmarkName,
+    address: req.body.address,
+  })
+    .then((bookmarks) => {
+      return res.json({ message: "Succesfully added to bookmarks!" });
     })
     .catch((err) => {
-      console.log(err);
-      next(err);
+      if (err instanceof db.Sequelize.ValidationError) {
+        return res.json({ message: "Invalid name or address" });
+      } else {
+        console.log(err);
+        next(err);
+      }
     });
 });
 
