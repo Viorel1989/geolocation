@@ -27,13 +27,13 @@ block page
           h5#bookmarkModalLabel.modal-title Bookmark
           button.close(type='button' data-dismiss='modal' aria-label='Close')
             span(aria-hidden='true') &times;
-          form
         .modal-body.text-center
-          .form-group
-            label(for='name') Enter a name for your bookmark
-              input#bookmarkName.form-control(type='text' aria-describedby='bookmarkName' placeholder='Bookmark name')
-              p(id="modalMessage") 
-              small#emailHelp.form-text.text-muted Optional field.  
+          form(id="bookmarkNameForm")
+            .form-group
+              label(for='name') Enter a name for your bookmark
+                input#bookmarkName.form-control(type='text' aria-describedby='bookmarkName' placeholder='Bookmark name')
+                p(id="modalMessage") 
+                small#emailHelp.form-text.text-muted Optional field.  
         .modal-footer
           button.btn.btn-secondary(type='button' id='bookmarkSubmit') Submit
 

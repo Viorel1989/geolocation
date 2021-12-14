@@ -17,6 +17,7 @@ $("#bookmarkSubmit").click(function () {
 
   $("#bookmarkModal").on("hidden.bs.modal", function (e) {
     $("#modalMessage").text("");
+    $("#bookmarkNameForm").trigger("reset");
   });
 
   console.log(JSON.stringify(address));
