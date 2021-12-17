@@ -1,4 +1,13 @@
 $(document).ready(function () {
+  $("#bookmarksMenu").click(function () {
+    $.getJSON("users/bookmarks", (bookmarks) => {
+      console.log(bookmarks);
+      // $.each(bookmarks, function (i, address) {
+      //   console.log(address);
+      // });
+    });
+  });
+
   $("#addressForm").submit(function (event) {
     event.preventDefault();
 

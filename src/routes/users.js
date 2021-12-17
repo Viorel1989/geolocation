@@ -169,4 +169,23 @@ router.post("/bookmarks", function (req, res, next) {
     });
 });
 
+router.get("/bookmarks", function (req, res, next) {
+  const db = req.app.locals.db;
+
+  // handle user login using sequelize
+  db.Bookmark.findAll({
+    where: {
+      userId: req.session.userId,
+    },
+  })
+    .then((bookmarks) => {
+      console.log(JSON.stringify(bookmarks));
+      return res.json(bookmarks);
+    })
+    .catch((err) => {
+      console.log(err);
+      next(err);
+    });
+});
+
 module.exports = router;

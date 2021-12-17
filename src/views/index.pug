@@ -20,6 +20,15 @@ block page
       span(id="loadingSpinner" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" style="display:none")
     button(type="button" id="bookmarkBtn" class="btn btn-primary ml-1" data-toggle="modal" data-target="#bookmarkModal") Bookmark
 
+    button#bookmarksMenu.btn.btn-primary.dropdown-toggle.ml-1(type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+      | Bookmarks
+    .dropdown-menu(aria-labelledby='bookmarksMenu')
+      button.dropdown-item(type='button') 
+        a(href="/users/bookmarks") Action
+      button.dropdown-item(type='button') Another action
+      button.dropdown-item(type='button') Something else here
+
+
   #bookmarkModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='bookmarkModalLabel' aria-hidden='true')
     .modal-dialog(role='document')
       .modal-content
