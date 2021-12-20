@@ -1,10 +1,15 @@
 $(document).ready(function () {
   $("#bookmarksMenu").click(function () {
     $.getJSON("users/bookmarks", (bookmarks) => {
-      console.log(bookmarks);
-      // $.each(bookmarks, function (i, address) {
-      //   console.log(address);
-      // });
+      //console.log(bookmarks);
+      $.each(bookmarks, function (i, bookmark) {
+        console.log(bookmark);
+        $(".dropdown-menu").append(
+          '<button class="dropdown-item" type="button"> ' +
+            bookmark +
+            " </button>"
+        );
+      });
     });
   });
 

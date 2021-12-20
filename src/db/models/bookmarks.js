@@ -20,13 +20,13 @@ module.exports = (sequelize, DataTypes) => {
       name: {
         type: DataTypes.STRING,
         validate: {
-          not: ["^~!@#$%^&*()_|=?;:'\".<>{}", "gi"],
+          is: /(^.+$|^(?![\s\S]))+$/gm,
         },
       },
       address: {
         type: DataTypes.STRING,
         validate: {
-          is: /^[a-z0-9\s]+$/i,
+          is: /^[\p{L}0-9\s,+]+$/iu,
         },
       },
     },

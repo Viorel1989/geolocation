@@ -179,8 +179,14 @@ router.get("/bookmarks", function (req, res, next) {
     },
   })
     .then((bookmarks) => {
-      console.log(JSON.stringify(bookmarks));
-      return res.json(bookmarks);
+      //console.log(bookmarks);
+      let bookmarks_list = [];
+      bookmarks.forEach((Bookmark) => {
+        //console.log(Bookmark.address);
+        bookmarks_list.push(`${Bookmark.address}`);
+      });
+      console.log(bookmarks_list);
+      return res.json({ bookmarks: bookmarks_list });
     })
     .catch((err) => {
       console.log(err);
