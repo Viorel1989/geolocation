@@ -161,6 +161,7 @@ router.post("/bookmarks", function (req, res, next) {
     })
     .catch((err) => {
       if (err instanceof db.Sequelize.ValidationError) {
+        console.log(err);
         return res.json({ message: "Invalid name or address" });
       } else {
         console.log(err);
