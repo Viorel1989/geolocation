@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       name: {
         type: DataTypes.STRING,
         validate: {
-          is: /(^.+$|^(?![\s\S]))+$/gm,
+          is: /^[\p{L}0-9\s]+$/iu,
         },
       },
       address: {
