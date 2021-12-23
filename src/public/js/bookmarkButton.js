@@ -1,43 +1,53 @@
-let input = document.getElementById("address");
-let button = document.getElementById("bookmarkBtn");
+$(document).ready(function () {
+  function getBookmarks() {
+    $.getJSON("users/bookmarks", (data) => {
+      $(".dropdown-menu").empty();
 
-input.addEventListener("input", statehandle);
-
-function statehandle() {
-  if (input.value.length <= 3) {
-    button.disabled = true;
-  } else {
-    button.disabled = false;
+      $.each(data.bookmarks, function (i, bookmark) {
+        console.log(bookmark);
+        $(".dropdown-menu").append(
+          '<button class="dropdown-item" type="button"> ' +
+            bookmark +
+            " </button>"
+        );
+      });
+    });
   }
-}
 
-$("#bookmarkSubmit").click(function () {
-  let address = $("#address").val();
-  let bookmarkName = $("#bookmarkName").val();
-
-  $("#bookmarkModal").on("hidden.bs.modal", function (e) {
-    $("#modalMessage").text("");
-    $("#bookmarkNameForm").trigger("reset");
+  $("#bookmarksMenu").click(function () {
+    getBookmarks();
   });
 
-  console.log(JSON.stringify(address));
-  console.log(JSON.stringify(bookmarkName));
+  $("#bookmarkSubmit").click(function () {
+    let address = $("#address").val();
+    let bookmarkName = $("#bookmarkName").val();
 
-  $.ajax({
-    type: "POST",
-    url: "/users/bookmarks",
-    dataType: "json",
-    data: JSON.stringify({ address: address, bookmarkName: bookmarkName }),
-    contentType: "application/json",
-    success: function (data) {
-      $("#modalMessage").text(data.message);
-    },
-    error: function (jqXHR, textStatus, errorThrown) {
-      console.log(jqXHR, textStatus, errorThrown);
-      // $("#bookmarkFeedback").css("display", "inline");
-    },
-  }).done(function () {
-    console.log("done");
-    //$("#bookmarkBtn").prop("disabled", true);
+    $("#bookmarkModal").on("hidden.bs.modal", function (e) {
+      $("#modalMessage").text("");
+      $("#bookmarkNameForm").trigger("reset");
+    });
+
+    console.log(JSON.stringify(address));
+    console.log(JSON.stringify(bookmarkName));
+
+    $.ajax({
+      type: "POST",
+      url: "/users/bookmarks",
+      dataType: "json",
+      data: JSON.stringify({ address: address, bookmarkName: bookmarkName }),
+      contentType: "application/json",
+      success: function (data) {
+        getBookmarks();
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(jqXHR, textStatus, errorThrown);
+        // $("#bookmarkFeedback").css("display", "inline");
+      },
+      complete: function (jqXHR) {
+        $("#modalMessage").text(jqXHR.responseJSON.message);
+      },
+    });
   });
+
+  getBookmarks();
 });

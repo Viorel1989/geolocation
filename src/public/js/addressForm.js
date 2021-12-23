@@ -9,7 +9,7 @@ $(document).ready(function () {
     } else {
       $("#addressFeedback").css("display", "none");
 
-      $(".btn").prop("disabled", true);
+      $("#findBtn").prop("disabled", true);
 
       $("#loadingSpinner").show();
 
@@ -36,6 +36,14 @@ $(document).ready(function () {
             '<li class="list-group-item">' + result + "</li>"
           );
         });
+
+        console.log($("#addressFormResults li").length);
+
+        if ($("#addressFormResults li").length > 0) {
+          $("#bookmarkBtn").prop("disabled", false);
+        } else {
+          $("#bookmarkBtn").prop("disabled", true);
+        }
       }
 
       $.ajax({
@@ -49,7 +57,7 @@ $(document).ready(function () {
           $("#loadingSpinner").hide();
         },
       }).done(function () {
-        $(".btn").prop("disabled", false);
+        $("#findBtn").prop("disabled", false);
         $("#loadingSpinner").hide();
       });
     }

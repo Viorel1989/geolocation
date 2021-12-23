@@ -157,16 +157,41 @@ router.post("/bookmarks", function (req, res, next) {
     address: req.body.address,
   })
     .then((bookmarks) => {
-      return res.json({ message: "Succesfully added to bookmarks!" });
+      return res.json({ message: "Successfully added to bookmarks!" });
     })
     .catch((err) => {
       if (err instanceof db.Sequelize.ValidationError) {
         console.log(err);
-        return res.json({ message: "Invalid name or address" });
+        return res.json({ message: "Invalid name or address" }, 400);
       } else {
         console.log(err);
         next(err);
       }
+    });
+});
+
+router.get("/bookmarks", function (req, res, next) {
+  const db = req.app.locals.db;
+
+  // handle user login using sequelize
+  db.Bookmark.findAll({
+    where: {
+      userId: req.session.userId,
+    },
+  })
+    .then((bookmarks) => {
+      //console.log(bookmarks);
+      let bookmarks_list = [];
+      bookmarks.forEach((Bookmark) => {
+        //console.log(Bookmark.address);
+        bookmarks_list.push(`${Bookmark.name}`);
+      });
+      console.log(bookmarks_list);
+      return res.json({ bookmarks: bookmarks_list });
+    })
+    .catch((err) => {
+      console.log(err);
+      next(err);
     });
 });
 

@@ -16,9 +16,14 @@ block page
       div(id="addressFeedback" class="invalid-feedback") Please provide an address.
       div(id="serverFeedback" class="invalid-feedback") Please try again later.
 
-    button(type="submit" class="btn btn-primary") Find
+    button(type="submit" class="btn btn-primary" id="findBtn") Find
       span(id="loadingSpinner" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" style="display:none")
-    button(type="button" id="bookmarkBtn" class="btn btn-primary ml-1" data-toggle="modal" data-target="#bookmarkModal") Bookmark
+    button(type="button" id="bookmarkBtn" class="btn btn-primary ml-1" data-toggle="modal" data-target="#bookmarkModal" disabled) Bookmark
+
+
+    button#bookmarksMenu.btn.btn-primary.dropdown-toggle.ml-1(type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+      | Bookmarks
+    .dropdown-menu(aria-labelledby='bookmarksMenu')
 
   #bookmarkModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='bookmarkModalLabel' aria-hidden='true')
     .modal-dialog(role='document')
