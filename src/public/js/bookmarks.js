@@ -1,22 +1,16 @@
 $(document).ready(function () {
   function getBookmarks() {
     $.getJSON("users/bookmarks", (data) => {
-      $(".dropdown-menu").empty();
-
       $.each(data.bookmarks, function (i, bookmark) {
         console.log(bookmark);
-        $(".dropdown-menu").append(
-          '<button class="dropdown-item" type="button"> ' +
+        $(
+          "<tr><td> " +
             bookmark +
-            " </button>"
-        );
+            '</td><td> <button class="btn btn-danger" type="button">Delete</button></td>'
+        ).appendTo($("tbody"));
       });
     });
   }
-
-  $("#bookmarksMenu").click(function () {
-    getBookmarks();
-  });
 
   $("#bookmarkSubmit").click(function () {
     let address = $("#address").val();

@@ -18,8 +18,8 @@ $(document).ready(function () {
         const listId = "addressFormResults";
 
         if (!$("#" + headerID).length) {
-          $('<h3 class="mt-5" id="' + headerID + '">Result</h3>').insertAfter(
-            $("#addressForm")
+          $('<h3 class="mt-5" id="' + headerID + '">Result</h3>').appendTo(
+            $("#resultsSection")
           );
         }
 
