@@ -173,21 +173,14 @@ router.post("/bookmarks", function (req, res, next) {
 router.get("/bookmarks", function (req, res, next) {
   const db = req.app.locals.db;
 
-  // handle user login using sequelize
+  // handle user bookmarks using sequelize
   db.Bookmark.findAll({
     where: {
       userId: req.session.userId,
     },
   })
     .then((bookmarks) => {
-      //console.log(bookmarks);
-      let bookmarks_list = [];
-      bookmarks.forEach((Bookmark) => {
-        //console.log(Bookmark.address);
-        bookmarks_list.push(`${Bookmark.name}`);
-      });
-      console.log(bookmarks_list);
-      return res.json({ bookmarks: bookmarks_list });
+      return res.json({ bookmarks: bookmarks });
     })
     .catch((err) => {
       console.log(err);
