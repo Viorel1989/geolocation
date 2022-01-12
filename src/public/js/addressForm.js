@@ -37,8 +37,6 @@ $(document).ready(function () {
           );
         });
 
-        console.log($("#addressFormResults li").length);
-
         if ($("#addressFormResults li").length > 0) {
           $("#bookmarkBtn").prop("disabled", false);
         } else {

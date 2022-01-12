@@ -170,6 +170,7 @@ router.post("/bookmarks", function (req, res, next) {
     });
 });
 
+/* GET user's bookmarks */
 router.get("/bookmarks", function (req, res, next) {
   const db = req.app.locals.db;
 
@@ -185,6 +186,31 @@ router.get("/bookmarks", function (req, res, next) {
     .catch((err) => {
       console.log(err);
       next(err);
+    });
+});
+
+/*DELETE a bookmark */
+router.delete("/bookmarks/:id", function (req, res, next) {
+  const id = req.params.id;
+  console.log(id);
+  const db = req.app.locals.db;
+  db.Bookmark.destroy({
+    where: {
+      userId: req.session.userId,
+      id: id,
+    },
+  })
+    .then(function () {
+      return res.json({ ok: "ok" });
+    })
+    .catch(function (err) {
+      if (err instanceof db.Sequelize.DatabaseError) {
+        console.log(err);
+        next(err);
+      } else {
+        console.info(`DELETE request failed: ${err.message}`);
+        next(err);
+      }
     });
 });
 
