@@ -1,13 +1,18 @@
 $(document).ready(function () {
+  function viewResults() {
+    alert("alibaba");
+  }
   function getBookmarks() {
     $.getJSON("users/bookmarks", (data) => {
       if (data.bookmarks) {
         $("#bookmarksRows").empty();
         $.each(data.bookmarks, function (i, bookmarks) {
           $(
-            "<tr><td> " +
+            '<tr><td><a href="#" class="bookmarkAnchor" data-bookmark-name="' +
               bookmarks.name +
-              '</td><td> <button class="btn btn-danger bookmarkDeleteButton" data-bookmark-id="' +
+              ' "> ' +
+              bookmarks.name +
+              '</a></td><td> <button class="btn btn-danger bookmarkDeleteButton" data-bookmark-id="' +
               bookmarks.id +
               '" >Delete</button></td>'
           ).appendTo($("tbody"));
