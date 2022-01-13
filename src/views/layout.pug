@@ -19,13 +19,12 @@ html(lang='en' class='h-100')
           span(class='navbar-toggler-icon')
         div(class='collapse navbar-collapse' id='navbarCollapse')
           ul(class='navbar-nav mr-auto')
-            li(class='nav-item active')
+            li(class=(reqPath === '/' ? 'nav-item active' : 'nav-item'))
               a(class='nav-link' href='/') Home
-                span(class='sr-only') (current)
             if userId
-              li(class='nav-item active')
+              li(class=(reqPath === '/users/profile' ? 'nav-item active' : 'nav-item'))
                 a(class='nav-link' href='/users/profile') Profile 
-              li(class='nav-item active')
+              li(class=(reqPath === '/users/logout' ? 'nav-item active' : 'nav-item'))
                 a(class='nav-link' href='/users/logout') Logout            
     main(role='main' class='flex-shrink-0')
       div(class='container')
