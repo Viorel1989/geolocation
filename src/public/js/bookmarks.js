@@ -1,10 +1,8 @@
 $(document).ready(function () {
-  function viewResults() {
-    alert("alibaba");
-  }
   function getBookmarks() {
     $.getJSON("users/bookmarks", (data) => {
-      if (data.bookmarks) {
+      console.log(data.bookmarks);
+      if (data.bookmarks.length > 0) {
         $("#bookmarksRows").empty();
         $.each(data.bookmarks, function (i, bookmarks) {
           $(
@@ -15,12 +13,13 @@ $(document).ready(function () {
               '</a></td><td> <button class="btn btn-danger bookmarkDeleteButton" data-bookmark-id="' +
               bookmarks.id +
               '" >Delete</button></td>'
-          ).appendTo($("tbody"));
+          ).appendTo($("#bookmarksRows"));
         });
       } else {
-        $("<tr><h1>No bookmarks, add one if you want</p></h1>").appendTo(
-          $("tbody")
-        );
+        $("#bookmarksRows").empty();
+        $(
+          "<tr><td><p>No bookmarks yet, feel free to ad one</p></td></tr>"
+        ).appendTo($("#bookmarksRows"));
       }
     });
   }
