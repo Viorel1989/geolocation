@@ -7,7 +7,7 @@ $(document).ready(function () {
         $.each(data.bookmarks, function (i, bookmarks) {
           $(
             '<tr><td><a href="#" class="bookmarkAnchor" data-bookmark-name="' +
-              bookmarks.name +
+              bookmarks.address +
               ' "> ' +
               bookmarks.name +
               '</a></td><td> <button class="btn btn-danger bookmarkDeleteButton" data-bookmark-id="' +
@@ -43,6 +43,7 @@ $(document).ready(function () {
       data: JSON.stringify({ address: address, bookmarkName: bookmarkName }),
       contentType: "application/json",
       success: function (data) {
+        $("#bookmarkModal").modal("hide");
         getBookmarks();
       },
       error: function (jqXHR, textStatus, errorThrown) {
