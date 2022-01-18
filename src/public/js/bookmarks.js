@@ -52,7 +52,7 @@ $(document).ready(function () {
       },
       complete: function (jqXHR) {
         $("#modalMessage").text(jqXHR.responseJSON.message);
-        getBookmarks();
+        // getBookmarks();
       },
     });
   });
