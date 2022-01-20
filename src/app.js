@@ -65,6 +65,11 @@ app.use(function (req, res, next) {
   next();
 });
 
+app.use(function (req, res, next) {
+  res.locals.reqPath = req.path;
+  next();
+});
+
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 

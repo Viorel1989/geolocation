@@ -1,9 +1,5 @@
 var express = require("express");
-const user = require("../db/models/user");
 var router = express.Router();
-const bcrypt = require("bcrypt");
-
-let session;
 
 /* GET users listing. */
 router.get("/", function (req, res, next) {
@@ -147,6 +143,74 @@ router.post("/profile", function (req, res, next) {
     .catch((err) => {
       console.log(err);
       next(err);
+    });
+});
+
+/* POST bookmark form data */
+router.post("/bookmarks", function (req, res, next) {
+  // handle bookmarks using sequelize
+  const db = req.app.locals.db;
+
+  db.Bookmark.create({
+    userId: req.session.userId,
+    name: req.body.bookmarkName,
+    address: req.body.address,
+  })
+    .then((bookmarks) => {
+      return res.json({ message: "Successfully added to bookmarks!" });
+    })
+    .catch((err) => {
+      if (err instanceof db.Sequelize.ValidationError) {
+        console.log(err);
+        return res.json({ message: "Invalid name or address" }, 400);
+      } else {
+        console.log(err);
+        next(err);
+      }
+    });
+});
+
+/* GET user's bookmarks */
+router.get("/bookmarks", function (req, res, next) {
+  const db = req.app.locals.db;
+
+  // handle user bookmarks using sequelize
+  db.Bookmark.findAll({
+    where: {
+      userId: req.session.userId,
+    },
+  })
+    .then((bookmarks) => {
+      return res.json({ bookmarks: bookmarks });
+    })
+    .catch((err) => {
+      console.log(err);
+      next(err);
+    });
+});
+
+/*DELETE a bookmark */
+router.delete("/bookmarks/:id", function (req, res, next) {
+  const id = req.params.id;
+  console.log(id);
+  const db = req.app.locals.db;
+  db.Bookmark.destroy({
+    where: {
+      userId: req.session.userId,
+      id: id,
+    },
+  })
+    .then(function () {
+      return res.json({ ok: "ok" });
+    })
+    .catch(function (err) {
+      if (err instanceof db.Sequelize.DatabaseError) {
+        console.log(err);
+        next(err);
+      } else {
+        console.info(`DELETE request failed: ${err.message}`);
+        next(err);
+      }
     });
 });
 

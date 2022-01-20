@@ -24,7 +24,7 @@ router.post("/", function (req, res, next) {
         },
       })
       .then(function (response) {
-        console.log(response);
+        //console.log(response);
         let result = [];
 
         response.data.features.forEach(function (feature) {
