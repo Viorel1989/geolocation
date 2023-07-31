@@ -4,7 +4,10 @@
 
 ## Demo
 
-Demo available at [https://geolocation-mono.herokuapp.com](https://geolocation-mono.herokuapp.com) (Heroku).
+Demo available at:
+[http://3.69.233.75:3000/](http://3.69.233.75:3000/) (AWS).
+
+
 
 ## Run Locally
 
