@@ -1,5 +1,5 @@
 FROM node:16
-RUN apt-get install -y dumb-init
+RUN apt-get install -y
 
 WORKDIR /usr/geolocation
 
