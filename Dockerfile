@@ -1,5 +1,5 @@
-FROM node:16-stretch-slim
-RUN apt-get update && apt-get install -y dumb-init
+FROM node:16
+RUN apt-get install -y dumb-init
 
 WORKDIR /usr/geolocation
 
@@ -13,4 +13,4 @@ RUN npm install
 EXPOSE 3000
 USER node
 
-CMD [ "dumb-init", "nodemon" ]
+CMD [ "npm", "run", "startDev" ]
