@@ -1,10 +1,5 @@
-name: Main
-
-on:
-  push:
-    branches:
-      - main
-
+name: Example workflow for Node using Snyk
+on: push
 jobs:
   security:
     runs-on: ubuntu-latest
